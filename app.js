@@ -7,13 +7,8 @@ var budgetController = (function(){
 
 
 
-
-
-
-
 // Controls User Interface && where we input methods
 var UIController = (function(){ 
-    
     
     // This is a private var in the UIController
     var DOMStrings = {
@@ -55,14 +50,26 @@ var UIController = (function(){
 // appController now has access to the other two modules. 
 var appController = (function(BudgetCtrl, UICtrl){
     
-    // This DOMStrings variables is storing the UIControllers variable (same name) with all the properties and values
+    var setUpEventListeners = function(){
+        
+        // This DOMStrings variables is storing the UIControllers variable (same name) with all the properties and values
+        var DOMStrings = UICtrl.getDOMStrings();
+        
+        document.querySelector(DOMStrings.addBtn).addEventListener("click", ctrlAddItem);
     
-    var DOMStrings = UICtrl.getDOMStrings();
+        // this return keypress happens on the global document
+    
+        document.addEventListener("keypress", function(event){
+            if(event.keyCode === 13 || event.which === 13){
+                ctrlAddItem();
+                console.log("Enter Key Pressed");
+            }
+        });
+    };
     
     var ctrlAddItem = function(){
         // 1. Get the field input data
         var input = UICtrl.grabInput();
-        console.log(input);
         
         // 2. add the item to the budget controller
         
@@ -71,20 +78,17 @@ var appController = (function(BudgetCtrl, UICtrl){
         // 4. calculate the budget
         
         // 5. display the budget on the UI
-    }
+    };
     
-    document.querySelector(DOM.addBtn).addEventListener("click", ctrlAddItem);
-    
-    // this return keypress happens on the global document
-    
-    document.addEventListener("keypress", function(event){
-        if(event.keyCode === 13 || event.which === 13){
-            ctrlAddItem();
+    return {
+        init: function(){
+            console.log("Application has started");
+            setUpEventListeners();
         }
-        
-    });
-
+    };
     
-})(budgetController, UIController);
+}) (budgetController, UIController);
 
 
+// If this function with an object is never called the event listerners never start
+appController.init();
