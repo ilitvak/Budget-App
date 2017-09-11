@@ -2,9 +2,34 @@
 // Budget Controller && get some data
 var budgetController = (function(){
     
-    // some code
+    // Create a main object that other objects will pilfer from
+    
+    var Expense = function(id, description, value) {
+        this.id = id;
+        this.description = description;
+        this.value = value;
+    };
+    
+    
+    var Income = function(id, description, value) {
+        this.id = id;
+        this.description = description;
+        this.value = value;
+    };
+   
+    var data = {
+        allItems : {
+            exp : [],
+            inc : []
+        },
+        totals : {
+            exp : 0,
+            inc : 0
+        }
+    }
+    
+    
 })();
-
 
 
 // Controls User Interface && where we input methods
