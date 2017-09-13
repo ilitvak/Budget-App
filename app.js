@@ -10,7 +10,6 @@ var budgetController = (function(){
         this.value = value;
     };
     
-    
     var Income = function(id, description, value) {
         this.id = id;
         this.description = description;
@@ -22,9 +21,51 @@ var budgetController = (function(){
             exp : [],
             inc : []
         },
+        
         totals : {
             exp : 0,
             inc : 0
+        }
+    }
+    return {
+        addItems : function(type, des, val){
+            var newItem, ID;
+            
+            // [1,2,3,4,5] next ID = 6
+            // [1,2,4,6,8] next ID = 9 this one has some elements deleted
+            
+            // ID = last ID + 1 
+            
+            if(data.allItems[type].length > 0) {
+                // Creates new ID
+                ID = data.allItems[type][data.allItems[type].length - 1].id + 1;
+            } else {
+                // if array is empty have the ID at 0
+                ID = 0;
+            }
+            
+            
+            
+            
+            // Create new item for "inc" or "exp" type
+            if(type === "exp") {
+                newItem = new Expense(ID, des, val);    
+            }
+            
+            else if(type === "inc"){
+                newItem = new Income(ID, des, val);
+            }
+            
+            
+            // pushes either "inc" or "exp" new item into correct array 
+            data.allItems[type].push(newItem);
+            
+            // return the new element
+            return newItem;
+        },
+        
+        testing : function(){
+            console.log(data);
         }
     }
     
@@ -49,16 +90,29 @@ var UIController = (function(){
     return {
         grabInput : function(){
             return {
-                // typeIncOrExp returns Income ( + ) or Expenses ( - )
+                
+                // typeIncOrExp returns a string of "inc" or "exp"
+                
                 typeIncOrExp : document.querySelector(DOMStrings.typeIncOrExp).value,
             
                 // Returns the description user tpyed in
+                
                 description : document.querySelector(DOMStrings.description).value,
             
                 // returns the $ amount user input
+                
                 value : document.querySelector(DOMStrings.value).value
             }
         },
+        
+        
+        addListItem : function(obj, type){
+          
+            // Create HTML string with placeholder text
+            
+            
+        }
+        
         
         // This object getDOMStrings becomes public since it is being returned as well. 
         getDOMStrings : function(){
@@ -93,10 +147,14 @@ var appController = (function(BudgetCtrl, UICtrl){
     };
     
     var ctrlAddItem = function(){
+        
+        var input, newItem;
+        
         // 1. Get the field input data
-        var input = UICtrl.grabInput();
+        input = UICtrl.grabInput();
         
         // 2. add the item to the budget controller
+        newItem = BudgetCtrl.addItems(input.typeIncOrExp, input.description, input.value);
         
         // 3. add the new item to the user interface
         
