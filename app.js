@@ -83,7 +83,7 @@ var UIController = (function(){
         value : ".add__value",
         addBtn : ".add__btn",
         incomeContainer : ".income__list",
-        expenseContainer : ".expense__list"
+        expenseContainer : ".expenses__list"
     }
 
     // Created a method that will retrieve the input from our description box
@@ -124,13 +124,13 @@ var UIController = (function(){
             else if(type === "exp") {
                 element = DOMStrings.expenseContainer;
                 
-                html = ' div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">- %value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div> '
+                html = ' <div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">- %value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div> '
                 
             }
             
             // Replaces the placeholder text with some actual data
             
-            newHTML = html.replace("%id%", obj.id);
+            newHTML = html.replace('%id%', obj.id);
             newHTML = newHTML.replace('%description%', obj.description);
             newHTML = newHTML.replace('%value%', obj.value);
             
