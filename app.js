@@ -81,7 +81,9 @@ var UIController = (function(){
         typeIncOrExp : ".add__type",
         description : ".add__description",
         value : ".add__value",
-        addBtn : ".add__btn"
+        addBtn : ".add__btn",
+        incomeContainer : ".income__list",
+        expenseContainer : ".expense__list"
     }
 
     // Created a method that will retrieve the input from our description box
@@ -107,15 +109,41 @@ var UIController = (function(){
         
         
         addListItem : function(obj, type){
+            
+            var html, newHTML, element;
           
             // Create HTML string with placeholder text
             
+            if(type === "inc") {
+                element = DOMStrings.incomeContainer;
+                
+                html = ' <div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">+ %value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div> ' 
+                
+            }
             
-        }
+            else if(type === "exp") {
+                element = DOMStrings.expenseContainer;
+                
+                html = ' div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">- %value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div> '
+                
+            }
+            
+            // Replaces the placeholder text with some actual data
+            
+            newHTML = html.replace("%id%", obj.id);
+            newHTML = newHTML.replace('%description%', obj.description);
+            newHTML = newHTML.replace('%value%', obj.value);
+            
+            // Insert the HTML into the DOM
+            // this element will either be an income or expense container
+            document.querySelector(element).insertAdjacentHTML("beforeend", newHTML);
+            
+            
+        },
         
         
         // This object getDOMStrings becomes public since it is being returned as well. 
-        getDOMStrings : function(){
+        getDOMStrings : function() {
             return DOMStrings;
         }
     }
@@ -157,6 +185,8 @@ var appController = (function(BudgetCtrl, UICtrl){
         newItem = BudgetCtrl.addItems(input.typeIncOrExp, input.description, input.value);
         
         // 3. add the new item to the user interface
+        
+        UICtrl.addListItem(newItem, input.typeIncOrExp);
         
         // 4. calculate the budget
         
