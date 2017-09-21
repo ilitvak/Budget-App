@@ -40,6 +40,7 @@ var budgetController = (function(){
         budget : 0,
         percentage : -1
     }
+    
     return {
         // blue text : 
         // methods - since we are making them public
@@ -77,7 +78,6 @@ var budgetController = (function(){
         },
         
         calculateBudget : function(){
-            
             // Calculate total income and expenses
             calculateTotal("exp");
             calculateTotal("inc");
@@ -85,8 +85,14 @@ var budgetController = (function(){
             // Calculate the budget : Income - expense
             data.budget = data.totals.inc - data.totals.exp;
             
-            // Calculate % of income that we spent
-            data.percentage = Math.round((data.totals.exp / data.totals.inc)) * 100;
+            // Calculate Percentage when inc > 0
+            
+            if(data.totals.inc > 0) {
+                // Calculate % of income that we spent
+                data.percentage = Math.round((data.totals.exp / data.totals.inc) * 100);
+            } else {
+                data.percentage = -1;
+            }
             
         },
         
@@ -118,8 +124,14 @@ var UIController = (function(){
         value : ".add__value",
         addBtn : ".add__btn",
         incomeContainer : ".income__list",
-        expenseContainer : ".expenses__list"
+        expenseContainer : ".expenses__list",
+        incomeLabel : ".budget__income--value",
+        expenseLabel : ".budget__expenses--value",
+        percentageLabel : ".budget__expenses--percentage",
+        budgetLabel: ".budget__value"
     }
+    
+
 
     // Created a method that will retrieve the input from our description box
     
@@ -195,6 +207,25 @@ var UIController = (function(){
             
         },
         
+        updateGlobalBudget : function(obj){
+                
+            document.querySelector(DOMStrings.incomeLabel).textContent = "+ " + obj.totalInc;
+            document.querySelector(DOMStrings.expenseLabel).textContent = "- " + obj.totalExp;
+            document.querySelector(DOMStrings.budgetLabel).textContent = obj.budget;
+            
+            if( obj.percentageLabel > 0 ) {
+                
+                document.querySelector(DOMStrings.budgetPercetageValue).textContent = obj.percentageLabel + "%";  
+                
+            } else {
+                
+                document.querySelector(DOMStrings.percentageLabel).textContent = "--";
+                
+            }
+            
+            
+        },
+        
         // This object getDOMStrings becomes public since it is being returned as well. 
         getDOMStrings : function() {
             return DOMStrings;
@@ -219,7 +250,7 @@ var appController = (function(BudgetCtrl, UICtrl){
             if(event.keyCode === 13 || event.which === 13){
                 ctrlAddItem();
             }
-        });
+        });    
     };
     
     
@@ -229,11 +260,10 @@ var appController = (function(BudgetCtrl, UICtrl){
         BudgetCtrl.calculateBudget();
         
         // 2. return the budget
-        
         var budget = BudgetCtrl.getBudget();
-        console.log(budget);
         
         // 3. display the budget on the UI
+        UICtrl.updateGlobalBudget(budget);
         
     };
     
@@ -257,7 +287,6 @@ var appController = (function(BudgetCtrl, UICtrl){
 
             // 5. Calculate and Update budget
             updateBudget();
-            
         }
     };
     
@@ -265,6 +294,14 @@ var appController = (function(BudgetCtrl, UICtrl){
         init: function(){
             console.log("Application has started");
             setUpEventListeners();
+            
+            // Resets all values
+            UICtrl.updateGlobalBudget({
+                budget: 0,
+                totalInc : 0,
+                totalExp : 0,
+                totalPercentage : 0
+            })
         }
     };
     
