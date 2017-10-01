@@ -176,7 +176,8 @@ var UIController = (function(){
         percentageLabel : ".budget__expenses--percentage",
         budgetLabel: ".budget__value",
         container : ".container",
-        itemPercentage: ".item__percentage"
+        itemPercentage: ".item__percentage",
+        monthLabel : ".budget__title--month"
     }
     
     var formatNumber = function(num, type) {
@@ -292,10 +293,14 @@ var UIController = (function(){
         },
         
         updateGlobalBudget : function(obj){
+            
+            var type;
+            
+            obj.budget > 0 ? type === 'inc' : type === 'exp';
                 
-            document.querySelector(DOMStrings.incomeLabel).textContent = obj.totalInc;
-            document.querySelector(DOMStrings.expenseLabel).textContent = obj.totalExp;
-            document.querySelector(DOMStrings.budgetLabel).textContent = obj.budget;
+            document.querySelector(DOMStrings.incomeLabel).textContent = formatNumber(obj.totalInc, 'inc');
+            document.querySelector(DOMStrings.expenseLabel).textContent = formatNumber(obj.totalExp, 'exp');
+            document.querySelector(DOMStrings.budgetLabel).textContent = formatNumber(obj.budget, type);
             
             if( obj.totalPercentage > 0 ) {
                 
@@ -327,6 +332,36 @@ var UIController = (function(){
                     current.textContent = "---";
                 }
             });
+        },
+
+        displayMonth: function(){
+            var now, currentMonth, currentYear;
+            
+            now = new Date();
+            currentMonth = now.getMonth();
+            currentYear = now.getFullYear();
+            
+            var months = [];
+            months[0] = "January";
+            months[1] = "February";
+            months[2] = "March";
+            months[3] = "April";
+            months[4] = "May";
+            months[5] = "June";
+            months[6] = "July";
+            months[7] = "August";
+            months[8] = "September";
+            months[9] = "October";
+            months[10] = "November";
+            months[11] = "December";
+
+            document.querySelector(DOMStrings.monthLabel).textContent = months[currentMonth] + " " + currentYear;
+            
+        },
+        
+        changedType : function(){
+            
+            document.querySelector(DOMStrings.typeIncOrExp).className = " change";
             
         },
         
@@ -357,6 +392,10 @@ var appController = (function(BudgetCtrl, UICtrl){
         });  
         
         document.querySelector(DOMStrings.container).addEventListener("click", ctrlDeleteItem);
+        
+        // This change event changes the border color when user switches from + to -
+        
+        document.querySelector(DOMStrings.typeIncOrExp).addEventListener("change", UICtrl.changedType );
         
     };
     
@@ -445,6 +484,9 @@ var appController = (function(BudgetCtrl, UICtrl){
         init: function(){
             console.log("Application has started");
             setUpEventListeners();
+            
+            // Displays Current Month
+            UICtrl.displayMonth();
             
             // Resets all values
             UICtrl.updateGlobalBudget({
