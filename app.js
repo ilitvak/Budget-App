@@ -210,6 +210,13 @@ var UIController = (function(){
         return (type === 'exp' ? '-' : '+') + ' ' + int + '.' + dec;
             
     };
+    
+    
+    var nodeListForEach = function(list, callback){
+        for(var i = 0; i < list.length; i++) {
+            callback(list[i], i);
+        }
+    };
 
     // Created a method that will retrieve the input from our description box
     
@@ -317,12 +324,6 @@ var UIController = (function(){
             
             var fields = document.querySelectorAll(DOMStrings.itemPercentage);
             
-            var nodeListForEach = function(list, callback){
-                for(var i = 0; i < list.length; i++) {
-                    callback(list[i], i);
-                }
-            };
-            
             
             nodeListForEach(fields, function(current, index){
                 
@@ -361,7 +362,18 @@ var UIController = (function(){
         
         changedType : function(){
             
-            document.querySelector(DOMStrings.typeIncOrExp).className = " change";
+            
+            // Returns a node list of the selected elements
+            var fields = document.querySelectorAll(
+                DOMStrings.typeIncOrExp + ',' + DOMStrings.description + ',' + DOMStrings.value 
+            );
+                
+            // Iterates over the list of nodes and its current index and applies a toggle clas
+            nodeListForEach(fields, function(cur){
+                cur.classList.toggle("red-focus");
+            });
+            
+            document.querySelector(DOMStrings.addBtn).classList.toggle("red");
             
         },
         
