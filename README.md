@@ -1,4 +1,4 @@
-# Dice-Game
+# Budget-App
 
 This is a Budget-App that allows the user to input their incomes & expenses in a fun and friendly UX. 
 
