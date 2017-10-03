@@ -6,7 +6,7 @@ var app = express();
 
 
 // allows us to serve static files (images / css)
-app.use(express.static(__dirname));
+app.use(express.static(__dirname + '/public'));
 
 // routes 
 
