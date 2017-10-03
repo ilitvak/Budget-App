@@ -4,6 +4,10 @@
     "scripts": {
         "start": "node server.js"
     },
+    "engines" : {
+        "node" : "8.6.0",
+        "npm" : "5.4.2"
+    },
     "dependencies": {
         "express": "4.13.3"
     },
