@@ -12,8 +12,5 @@
     "express": "4.15.5"
   },
   "author": "Irwin Litvak",
-  "license": "ISC",
-  "devDependencies": {
-    "dotenv": "^4.0.0"
-  }
+  "license": "ISC"
 }
