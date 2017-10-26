@@ -324,7 +324,6 @@ h2 {
         width: 50%;
     }
     
-    
     .add__btn {
         margin-left: 0;
     }
@@ -355,4 +354,15 @@ h2 {
     .add__container .add__value::placeholder {
         content: "Val";
     }
+    
+    .income, .expenses {
+        width: 100%;
+        margin-right: 0;
+    }
+    
+    .income {
+        margin-bottom: 5%;
+    }
+    
+    
 }
