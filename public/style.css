@@ -276,3 +276,83 @@ h2 {
 .unpaid .item__percentage { box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1); }
 .unpaid:hover .item__description { font-weight: 900; }
 
+
+
+/**********************************************
+*** Media Query Section
+**********************************************/
+
+
+/* Big tablet to 1200px (widths smaller than the 1140px row) */
+@media only screen and (max-width: 1200px){
+    
+    .container {
+        width: 90%;
+    }
+    
+    .income, .expenses {
+        width: 40%;
+    } 
+    
+    .income {
+        margin-right: 20%;
+    }
+    
+    .add {
+        width: 100%;
+        padding: 14px 0;
+    }
+    
+    .add__container {
+        width: 90%;
+        margin: 0 auto;
+    }
+    
+}
+
+/* Small tablet to big tablet: from 763px to 1023px */
+@media only screen and (max-width: 1023px){}
+
+/* Small phones to small tablets from 481px to 767px */
+@media only screen and (max-width: 767px){
+    
+    .add__container {
+        width: 95%;
+    }
+    
+    .add__description {
+        width: 50%;
+    }
+    
+    
+    .add__btn {
+        margin-left: 0;
+    }
+    
+}
+
+/* Small phones from 0 to 480px */
+@media only screen and (max-width: 480px){
+    
+    select.add__type, .add__container input, .add__container .add__btn {
+        float: left;
+    } 
+    
+    .add__type {
+        width: 15%;
+    }
+    
+    .add__description {
+        width: 50%;
+    }
+    
+    .add__value {
+        width: 18%;
+        padding: 12px 5px;
+        line-height: 14px;
+    }
+    
+    .add__container .add__value::placeholder {
+        content: "Val";
+    }
+}
