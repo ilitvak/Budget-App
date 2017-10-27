@@ -333,6 +333,20 @@ h2 {
 /* Small phones from 0 to 480px */
 @media only screen and (max-width: 480px){
     
+    .budget {
+        position: relative; 
+        padding: 4% 0;
+        margin: 0 auto;
+        width: 90%;
+        top: 0;
+        left: 0;
+        transform: none;
+    }
+    
+    .top {
+        height: auto;
+    }
+    
     select.add__type, .add__container input, .add__container .add__btn {
         float: left;
     } 
