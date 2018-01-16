@@ -7,13 +7,7 @@ This is a Budget-App that allows the user to input their incomes & expenses in a
 * HTML5
 * CSS3
 * Vanilla JavaScript
-* NodeJS
-* NPM
 * Love
-
-## Link to Project
-
-https://budget-app-x.herokuapp.com/
 
 Screenshots
 -----------
